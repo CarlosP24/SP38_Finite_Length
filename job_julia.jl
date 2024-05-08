@@ -30,6 +30,8 @@ mod = ARGS[1]
 L = parse(Int64, ARGS[2])
 
 calc_LDOS(mod, L)
+calc_LDOS_uc(mod, L)
+calc_LDOS_uc(mod, L; n = 2)
 
 # Clean up 
 rmprocs(workers()...)
