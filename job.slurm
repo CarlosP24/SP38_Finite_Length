@@ -4,7 +4,7 @@ sbatch <<EOT
 #!/bin/bash
 #SBATCH -p esbirro
 #SBATCH --nodes=1
-#SBATCH --exclude=es1
+#SBATCH --exclude=es[1,8]
 #SBATCH --exclusive
 #SBATCH --output=slurm.out/$1_$2_%j.out
 #SBATCH --error=slurm.out/$1_$2_%j.err
