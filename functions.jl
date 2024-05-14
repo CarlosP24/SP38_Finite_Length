@@ -56,6 +56,6 @@ function calc_length(g, Φrng, ωrng; ω = 0.0 + 1e-4im, Z = 0, minabs = 1e-5)
         Φ, ω = pt
         return lead_decay_length(g, ω, minabs = minabs; ω = ω, Φ = Φ, Z = Z)
     end
-    Lmvec = reshape(Lm, size(Φrng)...) 
+    Lmvec = reshape(Lm, size(pts)...) 
     return Lmvec
 end
