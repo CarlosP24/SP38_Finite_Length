@@ -12,7 +12,7 @@ function calc_Length(mod, L)
     mkpath(dirname(outdir)) 
 
     # Default config 
-    !@isdefined(Φrng) && (Φrng = subdiv(1.501, 2.499, 200))
+    !@isdefined(Φrng) && (Φrng = subdiv(0.501, 1.499, 200))
     !@isdefined(ωrng) && (ωrng = subdiv(-.26, .26, 201) .+ 1e-4im)
     
     # Load models

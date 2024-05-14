@@ -22,16 +22,17 @@ function plot_LDOS_length(mod, L, cmax; path = "Output")
 
     hidexdecorations!(ax; ticks = false)
 
-    ax = Axis(fig[2, 1]; xlabel = L"\Phi / \Phi_0", ylabel = L"$\xi_M$ (nm)", yscale = log10)
+    ax = Axis(fig[2, 1]; xlabel = L"\Phi / \Phi_0", ylabel = L"$\xi_M$ (nm)",)
     Φrng = data_Length["Φrng"]
+    ωrng = real.(data_LDOS["ωrng"])
     ξs = data_Length["Lms"] .* data_Length["model"].a0
-    lines!(ax, Φrng, ξs; color = :navyblue)
+    heatmap!(ax, Φrng, ωrng, ξs; colormap = :viridis)
 
     return fig
 end
 
-mod = "SCM_small"
-L = 0
+mod = "HCA"
+L = 100
 cmax = 5e-2
 fig = plot_LDOS_length(mod, L, cmax)
 figdir = "Figures/$(mod)"
