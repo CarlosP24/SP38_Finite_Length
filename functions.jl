@@ -36,32 +36,6 @@ function calc_ldos0(ρ, μrng, αrng, Φrng, Zs; ω = 0.0 + 1e-4im)
     return Dict([Z => sum.(LDOStensor[:, :, :, i]) for (i, Z) in enumerate(Zs)])
 end
 
-# function lead_decay_length(g::Quantica.GreensFunction{<:Quantica.Schur1DGreensSolver}, ω; minabs = 0.00001)
-#     s = g.solver
-#     d = s.deflator
-#     Quantica.shiftω!(d, ω)
-#     A, B = Quantica.deflated_pencil!(s.tmp, d)
-#     λs = Quantica.eigvals!(A, B)
-#     filter!(λ -> 1 > abs(λ) > minabs, λs)
-#     λmin = maximum(abs, λs) 
-#     Lm = -1/log(abs(λmin))
-#     return Lm
-# end
-
-# function lead_decay_length(gs::Quantica.GreenSolution; ω = 0.0 + 1e-4im, minabs = 1e-5)
-#     g = gs.parent
-#     s = g.solver
-#     sf = s.fsolver
-#     Quantica.update_LR!(sf)
-#     Quantica.update_iG!(sf, ω)
-#     A, B = Quantica.pencilAB!(sf)
-#     λs = Quantica.eigvals!(A, B)
-#     filter!(λ -> 1 > abs(λ) > minabs, λs)
-#     λmin = maximum(abs, λs) 
-#     Lm = -1/log(abs(λmin))
-#     return Lm
-# end
-
 function lead_decay_length(g::Quantica.GreenFunction, ω, minabs = 1e-5; params...)
     h = parent(g)                   # get the (Parametric)Hamiltonian from g
     Quantica.call!(h; params...)    # update the (Parametric)Hamiltonian with the params
@@ -76,8 +50,10 @@ function lead_decay_length(g::Quantica.GreenFunction, ω, minabs = 1e-5; params.
     return Lm
 end
 
-function calc_length(g, Φrng; ω = 0.0 + 1e-4im, Z = 0, minabs = 1e-5)
-    Lm = @showprogress pmap(Φrng) do Φ
+function calc_length(g, Φrng, ωrng; ω = 0.0 + 1e-4im, Z = 0, minabs = 1e-5)
+    pts = Iterators.product(Φrng, ωrng)
+    Lm = @showprogress pmap(pts) do pt
+        Φ, ω = pt
         return lead_decay_length(g, ω, minabs = minabs; ω = ω, Φ = Φ, Z = Z)
     end
     Lmvec = reshape(Lm, size(Φrng)...) 

@@ -44,6 +44,7 @@ L = parse(Int64, ARGS[2])
 #calc_LDOS_uc(mod, L; n = 2)
 
 Φrng = subdiv(0.501, 1.499, Φlength)
+ωrng = subdiv(-.26, .26, 201) .+ 1e-4im
 calc_Length(mod, L)
 
 # Clean up 

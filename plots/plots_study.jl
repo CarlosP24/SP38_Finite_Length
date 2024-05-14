@@ -1,22 +1,5 @@
-using CairoMakie, JLD2
-
-function plot_LDOS(pos, data; colorrange = (5e-4, 5e-2),  colormap = cgrad(:thermal)[10:end], ωs = nothing, vlines = nothing )
-    xlabel = L"\Phi / \Phi_0"
-    ylabel = L"\omega"
-    Φrng = data["Φrng"]
-    ωrng = real.(data["ωrng"])
-    LDOS = data["LDOS"]
-    Δ0 = data["model"].Δ0
-    Φa, Φb = first(Φrng), last(Φrng)
-    xticks = range(round(Int, Φa), round(Int, Φb))
-    yticks = ([-Δ0, 0, Δ0], [L"-\Delta_0", "0", L"\Delta_0"]) 
-    ax = Axis(pos; xlabel, ylabel, xticks, yticks)
-    heatmap!(ax, Φrng, ωrng, sum(values(LDOS)); colormap, colorrange, lowclip = :black)
-    xlims!(ax, (Φa, Φb))
-    ωs !== nothing && hlines!(ax, ωs, color = :white, linewidth = 1, linestyle = :dash)
-    vlines !== nothing && vlines!(ax, vlines, color = :white, linewidth = 1, linestyle = :dash)
-    return ωrng
-end
+using Revise, CairoMakie, JLD2
+includet("plot_functions.jl")
 
 
 function plot_study(mod, L, cmax; path = "Output")
@@ -27,7 +10,7 @@ function plot_study(mod, L, cmax; path = "Output")
         subdir = "L=$(L)"
     end
 
-    dir = "$(path)/$(mod)/$(subdir)"
+    dir = "../$(path)/$(mod)/$(subdir)"
 
     data = load("$(dir).jld2")
     data_uc1 = load("$(dir)_uc_1.jld2")
@@ -40,7 +23,7 @@ function plot_study(mod, L, cmax; path = "Output")
     plot_LDOS(fig[2, 1], data_uc1; colorrange =  (1e-4, cmax * 1e-1), vlines = [0.5, 1.5]  )
     Colorbar(fig[2, 2]; cbar...)
 
-    ωrng_z = plot_LDOS(fig[3, 1], data_uc2; colorrange =  (8e-4, cmax * 1e-1), vlines = [1.5, 2.5])
+    ax, ωrng_z = plot_LDOS(fig[3, 1], data_uc2; colorrange =  (8e-4, cmax * 1e-1), vlines = [1.5, 2.5])
     Colorbar(fig[3, 2]; cbar...)
 
     plot_LDOS(fig[1, 1], data; colorrange = (5e-4, cmax), ωs = [first(ωrng_z), last(ωrng_z)])
@@ -85,7 +68,7 @@ for mod in mods
     mkpath(figdir)
     for L in Ls 
         fig = plot_study(mod, L, cmax)
-        save("$(figdir)/LDOS_study_L$(L).pdf", fig)
+        save("../$(figdir)/LDOS_study_L$(L).pdf", fig)
     end
 end
 
@@ -96,7 +79,7 @@ for mod in mods
     mkpath(figdir)
     for L in Ls 
         fig = plot_study(mod, L, cmax)
-        save("$(figdir)/LDOS_study_L$(L).pdf", fig)
+        save("../$(figdir)/LDOS_study_L$(L).pdf", fig)
     end
 end
 

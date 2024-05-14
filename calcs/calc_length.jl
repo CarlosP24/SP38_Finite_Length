@@ -12,7 +12,8 @@ function calc_Length(mod, L)
     mkpath(dirname(outdir)) 
 
     # Default config 
-    !@isdefined(Φrng) && (Φrng = subdiv(0, 2.5, 200))
+    !@isdefined(Φrng) && (Φrng = subdiv(1.501, 2.499, 200))
+    !@isdefined(ωrng) && (ωrng = subdiv(-.26, .26, 201) .+ 1e-4im)
     
     # Load models
     model = models[mod]
@@ -25,7 +26,7 @@ function calc_Length(mod, L)
     g = greens_dict[gs](hSC, params)
 
     # Run n save 
-    Lms = calc_length(g, Φrng; ω = 0.0 + 1e-4im, Z = 0)
+    Lms = calc_length(g, Φrng, ωrng; ω = 0.0 + 1e-4im, Z = 0)
 
     save(outdir,
         Dict(
