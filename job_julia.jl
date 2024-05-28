@@ -43,7 +43,7 @@ L = parse(Int64, ARGS[2])
 calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
 Φrng = subdiv(-10, 2.5, Φlength*10)
-calc_LDOS(mod, L; Φrng, ωrng, Zs, nforced = 1)
+calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
 
 if L == 0
     Φrng = subdiv(0.501, 1.499, Φlength)
