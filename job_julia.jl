@@ -41,6 +41,8 @@ mod = ARGS[1]
 L = parse(Int64, ARGS[2])
 
 calc_LDOS(mod, L; Φrng, ωrng, Zs)
+
+Φrng = subdiv(-10, 2.5, Φlength*10)
 calc_LDOS(mod, L; Φrng, ωrng, Zs, nforced = 1)
 
 if L == 0
