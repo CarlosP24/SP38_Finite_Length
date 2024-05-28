@@ -25,8 +25,9 @@ end
 
 # Global config 
 Φlength = 200
+ωlength = 201
 Φrng = subdiv(0, 2.5, Φlength)
-ωrng = subdiv(-.26, .26, 201) .+ 1e-4im
+ωrng = subdiv(-.26, .26, ωlength) .+ 1e-4im
 Zs = -5:5 
 
 # Include code
@@ -39,13 +40,13 @@ include("calcs/calc_length.jl")
 mod = ARGS[1]
 L = parse(Int64, ARGS[2])
 
-#calc_LDOS(mod, L)
-#calc_LDOS_uc(mod, L)
-#calc_LDOS_uc(mod, L; n = 2)
+calc_LDOS(mod, L; Φrng, ωrng, Zs)
+calc_LDOS(mod, L; Φrng, ωrng, Zs, nforced = 1)
 
-Φrng = subdiv(0.501, 1.499, Φlength)
-ωrng = subdiv(-.26, .26, 201) .+ 1e-4im
-calc_Length(mod, L)
+if L == 0
+    Φrng = subdiv(0.501, 1.499, Φlength)
+    calc_Length(mod, L)
+end
 
 # Clean up 
 rmprocs(workers()...)

@@ -1,4 +1,4 @@
-function calc_Length(mod, L)
+function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, nforced = nothing)
     if L == 0
         gs = "semi"
         subdir = "semi"
@@ -10,17 +10,17 @@ function calc_Length(mod, L)
     # Setup Output
     outdir = "Output/$(mod)/$(subdir)_length.jld2"
     mkpath(dirname(outdir)) 
-
-    # Default config 
-    !@isdefined(Φrng) && (Φrng = subdiv(0.501, 1.499, 200))
-    !@isdefined(ωrng) && (ωrng = subdiv(-.26, .26, 201) .+ 1e-4im)
     
     # Load models
     model = models[mod]
     model = (; model..., L = L)
 
+    if nforced !== nothing
+        model = (; model..., ξd = 0)
+    end
+
     # Build nanowire
-    hSM, hSC, params = build_cyl(; model...,)
+    hSM, hSC, params = build_cyl(; model..., nforced)
 
     # Get Greens
     g = greens_dict[gs](hSC, params)

@@ -16,26 +16,22 @@ base_model = (;
     ishollow = true,
 )
 models = Dict(
-    "HCA" => (;
+    "HCA_70" => (;
         base_model...,
         μ = 0.75,
         α = 85,
     ),
-    "HCA_des" => (;
+    "HCA_30" => (;
         base_model...,
         R = 30,
         μ = 0.75,  
         α = 30,
     ),
-    "TCM_40" => (;
+    "HCA_50" => (;
         base_model...,
-        w = 40,
-        d = 10,
-        μ = 6.7,
-        α = 20,
-        τΓ = 48,
-        g = 10,
-        ishollow = false,
+        R = 50,
+        μ = 0.75,  
+        α = 50,
     ),
     "TCM_20" => (;
         base_model...,
@@ -47,7 +43,18 @@ models = Dict(
         g = 10,
         ishollow = false,
     ),
-    "TCM_des" => (;
+    "TCM_15" => (;
+        base_model...,
+        R = 50,
+        w = 15,
+        d = 10,
+        τΓ = 9,
+        μ = 25.7,
+        α = 25,
+        g = 10,
+        ishollow = false,
+    ),
+    "TCM_10" => (;
         base_model...,
         R = 30,
         w = 10,
@@ -58,7 +65,7 @@ models = Dict(
         g = 10,
         ishollow = false,
     ),
-    "SCM" => (;
+    "SCM_70" => (;
         base_model...,
         w = 70,
         d = 10,
@@ -69,38 +76,10 @@ models = Dict(
         preα = 46.66,
         ishollow = false,
     ),
-    "HCA_small" => (;
+    "SCM_30" => (;
         base_model...,
-        R = 45,
-        μ = 0.75,
-        α = 40,
-    ),
-    "TCM_small_40" => (;
-        base_model...,
-        R = 45,
-        w = 40,
-        d = 10,
-        μ = 6.7,
-        α = 20,
-        τΓ = 48,
-        g = 10,
-        ishollow = false,
-    ),
-    "TCM_small_20" => (;
-        base_model...,
-        R = 45,
-        w = 20,
-        d = 10,
-        τΓ = 10,
-        μ = 18.1,
-        α = 50,
-        g = 10,
-        ishollow = false,
-    ),
-    "SCM_small" => (;
-        base_model...,
-        R = 45,
-        w = 70,
+        R = 30,
+        w = 30,
         d = 10,
         Vmin = -30,
         g = 10,

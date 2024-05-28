@@ -50,11 +50,13 @@ function lead_decay_length(g::Quantica.GreenFunction, ω, minabs = 1e-5; params.
     return Lm
 end
 
+
 function calc_length(g, Φrng, ωrng; ω = 0.0 + 1e-4im, Z = 0, minabs = 1e-5)
     pts = Iterators.product(Φrng, ωrng)
     Lm = @showprogress pmap(pts) do pt
         Φ, ω = pt
-        return lead_decay_length(g, ω, minabs = minabs; ω = ω, Φ = Φ, Z = Z)
+        #return lead_decay_length(g, ω, minabs; ω = ω, Φ = Φ, Z = Z)
+        return Quantica.decay_lengths(g, ω, minabs; Φ = Φ, Z = Z)
     end
     Lmvec = reshape(Lm, size(pts)...) 
     return Lmvec
