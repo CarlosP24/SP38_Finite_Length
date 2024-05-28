@@ -26,7 +26,7 @@ end
 # Global config 
 Φlength = 200
 ωlength = 201
-Φrng = subdiv(0, 2.5, Φlength)
+Φrng = subdiv(0, 3.5, Φlength)
 ωrng = subdiv(-.26, .26, ωlength) .+ 1e-4im
 Zs = -5:5 
 
@@ -42,8 +42,10 @@ L = parse(Int64, ARGS[2])
 
 calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
-Φrng = subdiv(-10, 2.5, Φlength*10)
+Φrng = subdiv(-10, 3.5, Φlength*2)
 calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
+calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 3)
+
 
 if L == 0
     Φrng = subdiv(0.501, 1.499, Φlength)
