@@ -1,4 +1,4 @@
-function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, nforced = nothing)
+function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, nforced = nothing, Z = 0)
     if L == 0
         gs = "semi"
         subdir = "semi"
@@ -26,7 +26,7 @@ function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-
     g = greens_dict[gs](hSC, params)
 
     # Run n save 
-    Lms = calc_length(g, Φrng, ωrng; ω = 0.0 + 1e-4im, Z = 0)
+    Lms = calc_length(g, Φrng, ωrng; ω = 0.0 + 1e-4im, Z)
 
     save(outdir,
         Dict(
