@@ -88,4 +88,13 @@ models = Dict(
         preα = 46.66,
         ishollow = false,
     ),
+    "Pablos_test" => (;
+        base_model...,
+        Δ0 = 0.1,
+        α = 100,
+        R = 40,
+        d = 0,
+        w = 0,
+        μ =1.3 
+    )
 )

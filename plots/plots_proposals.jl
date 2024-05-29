@@ -71,11 +71,11 @@ function plot_prop(mod, L; path = "Output", colormap = cgrad(:thermal)[10:end], 
     ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1, step = 2)
     text!(ax, Φa + 1, Δ0*0.1 ; text = L"n = 1", align = (:center, :center), color = :white, fontsize = 15)
     text!(ax, Φa + 1, -Δ0*0.1 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
-
+    vlines!(ax, [0.5, 1.5]; color = :white, linestyle = :dash)
     hideydecorations!(ax; ticks = false)
     hidexdecorations!(ax; ticks = false)
 
-    # Under the carpet 2
+    # Under the carpet 3
     nforced = 3
     indir3 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
     fdata = build_data(indir3)
@@ -84,6 +84,7 @@ function plot_prop(mod, L; path = "Output", colormap = cgrad(:thermal)[10:end], 
     ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1, step = 2)
     text!(ax, Φa + 1, Δ0*0.1; text = L"n = 3", align = (:center, :center), color = :white, fontsize = 15)
     text!(ax, Φa + 1, -Δ0*0.1 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
+    vlines!(ax, [2.5, 3.5]; color = :white, linestyle = :dash)
 
     hideydecorations!(ax; ticks = false)
 
@@ -114,22 +115,33 @@ function plot_prop(mod, L; path = "Output", colormap = cgrad(:thermal)[10:end], 
     fig
 end
 
-mod = "HCA_70"
+
+
+colorranges = Dict(
+    "HCA_70" => (5e-4, 5e-2),
+    "HCA_50" => (5e-4, 2e-2),
+    "HCA_30" => (1e-4, 1e-2),
+    "TCM_20" => (5e-4, 2e-2),
+    "TCM_15" => (1e-4, 1e-2),
+    "SCM_70" => (5e-4, 2e-1),
+)
+
+mod = "SCM_70"
 L = 0 
-fig = plot_prop(mod, L)
+fig = plot_prop(mod, L; colorrange = colorranges[mod])
 fig
 
 ## Loop
-for mod in ["HCA_70", "HCA_50", "HCA_30", "TCM_20", "TCM_15"]
+for mod in ["HCA_70", "HCA_50","TCM_20", "TCM_15"]
     for L in range(0, 200, step = 50)
-        fig = plot_prop(mod, L)
+        fig = plot_prop(mod, L; colorrange = colorranges[mod])
         save("Figures/Proposals/$(mod)_$(L).pdf", fig)
     end
-end
+end 
 
-for mod in ["SCM_70", "SCM_30"]
+for mod in ["SCM_70"]
     for L in range(0, 2000, step = 500)
-        fig = plot_prop(mod, L)
+        fig = plot_prop(mod, L; colorrange = colorranges[mod])
         save("Figures/Proposals/$(mod)_$(L).pdf", fig)
     end
 end

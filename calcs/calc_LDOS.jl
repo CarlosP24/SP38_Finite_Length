@@ -1,4 +1,4 @@
-function calc_LDOS(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, Zs = -5:5, nforced = nothing)
+function calc_LDOS(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, Zs = -5:5, nforced = nothing, path = "Output")
 
     if L == 0
         gs = "semi"
@@ -9,7 +9,7 @@ function calc_LDOS(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.2
     end
 
     # Setup Output
-    outdir = "Output/$(mod)/$(subdir).jld2"
+    outdir = "$(path)/$(mod)/$(subdir).jld2"
     mkpath(dirname(outdir))
 
     # Load models
