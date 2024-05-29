@@ -40,11 +40,11 @@ include("calcs/calc_length.jl")
 mod = ARGS[1]
 L = parse(Int64, ARGS[2])
 
-#calc_LDOS(mod, L; Φrng, ωrng, Zs)
+calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
 Φrng = subdiv(-10, 3.5, Φlength*2)
-#calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
-#calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 3)
+calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
+calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 3)
 
 
 if L == 0
