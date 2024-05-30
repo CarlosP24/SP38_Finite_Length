@@ -20,7 +20,12 @@ function calc_ldos(ρ, Φs, ωs, Zs)
     pts = Iterators.product(Φs, ωs, Zs)
     LDOS = @showprogress pmap(pts) do pt
         Φ, ω, Z = pt 
-        return ρ(ω; ω = ω, Φ = Φ, Z = Z) 
+        ld = try 
+            ρ(ω; ω = ω, Φ = Φ, Z = Z)
+        catch
+            0.0
+        end
+        return ld
     end
     LDOSarray = reshape(LDOS, size(pts)...)
     return Dict([Z => sum.(LDOSarray[:, :, i]) for (i, Z) in enumerate(Zs)])
