@@ -60,7 +60,7 @@ function plot_prop(mod, L; path = "Output", colormap = cgrad(:thermal)[10:end], 
     ax = Axis(fig[2, 1]; xlabel, ylabel, xticks, yticks, ylabelpadding)
     heatmap!(ax, Φrng, ωrng, (LDOS[0] .+ LDOS[-1].*iseven.(lobe)).*ifelse.(iseven.(lobe), 0.5, 1); colormap, colorrange = (first(colorrange ), last(colorrange )*0.2), lowclip = :black, rasterize = 5)
     xlims!(ax, (Φa, Φb))
-    [text!(ax, x, -Δ0; text = ifelse(iseven(x), L"m_J = \pm 1/2", L"m_J = 0"), align = ( ifelse(x == 0, :left, :center), :center), color = :white, fontsize = 15) for x in xticks[2:end]]
+    [text!(ax, x, -Δ0; text = ifelse(iseven(x), L"m_J = \pm 1/2", L"m_J = 0"), align = ( ifelse(x == 0, :left, :center), :center), color = :white, fontsize = 15) for x in xticks[2:4]]
     
     # Under the carpet 1
     nforced = 1 
