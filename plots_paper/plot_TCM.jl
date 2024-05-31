@@ -24,6 +24,7 @@ function plot_semi_inf(path, mod)
     fdata_length = build_data_length("$path/$mod/semi_length.jld2")
     ax = plot_length(fig[1, 2], fdata, fdata_length; dlim = 1e-1)
     hidexdecorations!(ax)
+    hideydecorations!(ax; ticks = false)
     # n = 3
     nforced = 3
     indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
@@ -31,6 +32,11 @@ function plot_semi_inf(path, mod)
 
     ax = plot_LDOS_uc(fig[1, 3], fdata, nforced; colorrange = (6e-5, 3e-3))
     hideydecorations!(ax; ticks = false) 
+
+    # Length
+    fdata_length = build_data_length("$path/$mod/semi_length.jld2")
+    ax = plot_length(fig[1, 2], fdata, fdata_length; dlim = 1e-1)
+    hidexdecorations!(ax)
 
 
     

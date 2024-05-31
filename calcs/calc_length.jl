@@ -17,6 +17,7 @@ function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-
 
     if nforced !== nothing
         model = (; model..., ξd = 0)
+        outdir = replace(outdir, ".jld2" => "_uc_$(nforced).jld2")
     end
 
     # Build nanowire

@@ -51,7 +51,7 @@ function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], c
     ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1, step = 2)
     text!(ax, Φa + 1, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
     text!(ax, Φa + 1, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
-    vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dash)
+    vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dashdot)
     return ax
 end
 
@@ -63,9 +63,13 @@ function plot_length(pos, fdata, fdata_length; dlim = 1)
     ξM = sum(Lms .* LDOS_MZM, dims = 2) 
 
     ξM[ξM .== 0.0] .= NaN
-
-    ax = Axis(pos; backgroundcolor = (:white, 0), yaxisposition = :right, yscale = log10)
-    lines!(ax, Φrng, vec(ξM); linewidth = 2, color = :white)
+    ξM = vec(ξM)
+    notNaN_ξM = .!isnan.(ξM)
+    ξMax = ξM[findfirst(notNaN_ξM)]
+    ξMin = minimum(ξM[findall(notNaN_ξM)])
+    ax = Axis(pos; backgroundcolor = (:white, 0), yaxisposition = :right, )
+    lines!(ax, Φrng, ξM; color = :white, linestyle = :dash, linewidth = 3)
     xlims!(ax, (Φa, Φb))
+    ylims!(ax, (-ξMax, ξMax))
     return ax
 end
