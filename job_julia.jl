@@ -48,7 +48,8 @@ L = parse(Int64, ARGS[2])
 
 
 if L == 0
-    calc_Length(mod, L; Φrng, ωrng, nforced = 1)
+    #calc_Length(mod, L; Φrng, ωrng, nforced = 1)
+    calc_Length(mod, L; Φrng, ωrng, nforced = 3)
 end
 
 # Clean up 

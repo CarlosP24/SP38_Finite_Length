@@ -64,8 +64,8 @@ function plot_length(pos, fdata, fdata_length; dlim = 1)
 
     ξM[ξM .== 0.0] .= NaN
 
-    ax = Axis(pos; backgroundcolor = (:white, 0), yaxisposition = :right)
-    lines!(ax, Φrng, ξM; linewidth = 2, color = :white)
+    ax = Axis(pos; backgroundcolor = (:white, 0), yaxisposition = :right, yscale = log10)
+    lines!(ax, Φrng, vec(ξM); linewidth = 2, color = :white)
     xlims!(ax, (Φa, Φb))
     return ax
 end

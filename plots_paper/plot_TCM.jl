@@ -22,7 +22,7 @@ function plot_semi_inf(path, mod)
 
     # Length
     fdata_length = build_data_length("$path/$mod/semi_length.jld2")
-    ax = plot_length(fig[1, 2], fdata, fdata_length)
+    ax = plot_length(fig[1, 2], fdata, fdata_length; dlim = 1e-1)
     hidexdecorations!(ax)
     # n = 3
     nforced = 3
