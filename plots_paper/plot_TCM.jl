@@ -19,14 +19,21 @@ function plot_semi_inf(path, mod)
 
     ax = plot_LDOS_uc(fig[1, 2], fdata, nforced; colorrange = (6e-5, 3e-3))
     hideydecorations!(ax; ticks = false)
+
+    # Length
+    fdata_length = build_data_length("$path/$mod/semi_length.jld2")
+    ax = plot_length(fig[1, 2], fdata, fdata_length)
+    hidexdecorations!(ax)
     # n = 3
     nforced = 3
     indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
     fdata = build_data(indir1)
 
     ax = plot_LDOS_uc(fig[1, 3], fdata, nforced; colorrange = (6e-5, 3e-3))
-    hideydecorations!(ax; ticks = false)
+    hideydecorations!(ax; ticks = false) 
 
+
+    
     cbar = (; colormap = :thermal, label = L"$$ LDOS (arb. units)", limits = (0, 1),  ticklabelsvisible = true, ticks = [0,1], labelpadding = -10,  width = 15, ticksize = 2, ticklabelpad = 5, labelsize = 16)
 
     Colorbar(fig[1, 4]; cbar...)

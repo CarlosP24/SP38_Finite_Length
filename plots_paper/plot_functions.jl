@@ -13,6 +13,11 @@
     ylabelpadding = -10
 end
 
+@with_kw struct formated_data_length
+    Φrng = nothing
+    Lms = nothing
+end
+
 function build_data(indir)
     data = load(indir)
     Φrng = data["Φrng"]
@@ -23,6 +28,13 @@ function build_data(indir)
     xticks = range(round(Int, Φa), round(Int, Φb))
     yticks = ([-Δ0, 0, Δ0], [L"-\Delta_0", "0", L"\Delta_0"]) 
     return formated_data(; data, Φrng, ωrng, LDOS, Δ0, Φa, Φb, xticks, yticks)
+end
+
+function build_data_length(indir)
+    data = load(indir)
+    Φrng = data["Φrng"]
+    Lms = data["Lms"]
+    return formated_data_length(; Φrng, Lms)
 end
 
 function plot_LDOS(pos, fdata; colormap = cgrad(:thermal)[10:end], colorrange = (5e-4, 5e-2))
@@ -40,5 +52,20 @@ function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], c
     text!(ax, Φa + 1, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
     text!(ax, Φa + 1, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
     vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dash)
+    return ax
+end
+
+function plot_length(pos, fdata, fdata_length; dlim = 1)
+    @unpack Lms = fdata_length 
+    @unpack Φrng, ωrng, LDOS, Φa, Φb = fdata 
+
+    LDOS_MZM = sum(values(LDOS)) .> dlim
+    ξM = sum(Lms .* LDOS_MZM, dims = 2) 
+
+    ξM[ξM .== 0.0] .= NaN
+
+    ax = Axis(pos; backgroundcolor = (:white, 0), yaxisposition = :right)
+    lines!(ax, Φrng, ξM; linewidth = 2, color = :white)
+    xlims!(ax, (Φa, Φb))
     return ax
 end
