@@ -45,12 +45,12 @@ function plot_LDOS(pos, fdata; colormap = cgrad(:thermal)[10:end], colorrange = 
     return ax
 end
 
-function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], colorrange = (5e-4, 5e-2))
+function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], colorrange = (5e-4, 5e-2), step = 2)
     ax = plot_LDOS(pos, fdata; colormap, colorrange)
     @unpack Φa, Φb, Δ0 = fdata
-    ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1, step = 2)
-    text!(ax, Φa + 1.5, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
-    text!(ax, Φa + 1.5, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
+    ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1; step)
+    text!(ax, Φa + 0.75*step, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
+    text!(ax, Φa + 0.75*step, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
     vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dashdot)
     return ax
 end
@@ -73,25 +73,6 @@ function plot_length(pos, fdata, fdata_length; dlim = 1, colorrange = (10^2, 10^
     ξM = sum(Lms .* LDOS_MZM, dims = 2) 
 
     ξM[ξM .== 0.0] .= NaN
-    ξM = vec(ξM)
-    notNaN_ξM = .!isnan.(ξM)
-    ξMax = ξM[findfirst(notNaN_ξM)]
-    ξMin = minimum(ξM[findall(notNaN_ξM)])
-    ax = Axis(pos; backgroundcolor = (:white, 0),)
-    heatmap!(ax, Φrng, [0], reshape(log10.(ξM), (length(ξM), 1)); colormap = :RdYlGn_9, colorrange, )
-    xlims!(ax, (Φa, Φb))
-    hideydecorations!(ax)
-    hidespines!(ax)
-    hidexdecorations!(ax)
-    return ax, ξMax, ξMin
-end
-
-function plot_length(pos, fdata_length; colorrange = (10^2, 10^3))
-    @unpack Φrng, Lms = fdata_length 
-    Φa, Φb = first(Φrng), last(Φrng)
-
-    ξM = Lms[:, ceil(Int,size(Lms)[2]/2)]
-
     ξM = vec(ξM)
     notNaN_ξM = .!isnan.(ξM)
     ξMax = ξM[findfirst(notNaN_ξM)]
