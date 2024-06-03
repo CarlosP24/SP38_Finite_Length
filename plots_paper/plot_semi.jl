@@ -21,7 +21,7 @@ function plot_semi_inf(path, mod)
     hideydecorations!(ax; ticks = false)
 
     # Length
-    fdata_length = build_data_length("$path/$mod/semi_length_uc_1.jld2")
+    fdata_length = build_data_length("$path/$mod/semi_uc_1.jld2")
     ax, ξMax, ξMin = plot_length(fig[1, 2], fdata, fdata_length; dlim = 2e-2,colorrange = (log10(50), log10(160)))
 
     # n = 3
@@ -42,11 +42,11 @@ function plot_semi_inf(path, mod)
     #tick2 = 0.25
     #ξ2 = round(Int, ξdown + (ξup - ξdown)*tick2)
 
-    cbar = (; colormap = :RdYlGn_9, label = L"$\xi_M$ (nm)", limits = (0, 1),  ticklabelsvisible = true, ticks = ([0,  1], [L"%$(ξdown)", L"$\infty$"]), labelpadding = -30,  width = 15, ticksize = 2, ticklabelpad = 5, labelsize = 16,)
+    cbar = (; colormap = :thermal, label = L"$$ LDOS (arb. units)", limits = (0, 1),  ticklabelsvisible = true, ticks = [0,1], labelpadding = -10,  width = 15, ticksize = 2, ticklabelpad = 5, labelsize = 16,)
 
     Colorbar(fig[2, 4]; cbar...)
 
-    cbar = (; colormap = :thermal, label = L"$$ LDOS (arb. units)", limits = (0, 1),  ticklabelsvisible = true, ticks = [0,1], labelpadding = -10,  width = 15, ticksize = 2, ticklabelpad = 5, labelsize = 16,)
+    cbar = (; colormap = :RdYlGn_9, label = L"$\xi_M$ (nm)", limits = (0, 1),  ticklabelsvisible = true, ticks = ([0,  1], [L"%$(ξdown)", L"$\infty$"]), labelpadding = -30,  width = 15, ticksize = 2, ticklabelpad = 5, labelsize = 16,)
 
     Colorbar(fig[2, 5]; cbar...)
 
@@ -63,11 +63,17 @@ function plot_semi_inf(path, mod)
 
     rowsize!(fig.layout, 1, Relative(0.1))
 
-    return fig, fdata
+    return fig
 end
 
 mod = "TCM_20"
-fig, fdata = plot_semi_inf("Output", mod)
-outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Paper Draft/Figure proposals"
+fig = plot_semi_inf("Output", mod)
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Manuscript/Figure proposals"
 save(joinpath(outpath, "Fig_TCM_20.pdf"), fig)
+fig
+
+##
+mod = "SCM_70"
+fig = plot_semi_inf("Output", mod)
+save(joinpath(outpath, "Fig_SCM_70.pdf"), fig)
 fig

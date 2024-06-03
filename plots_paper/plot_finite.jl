@@ -42,15 +42,15 @@ function plot_finite(path, mod, Lleft, Lright)
     style = (font = "CMU Serif Bold", fontsize = 20)
     Label(fig[1, 1, TopLeft()], "a",  padding = (-40, 0, -50, 0); style...)
     style = (font = "CMU Serif Bold", fontsize = 20)
-    Label(fig[1, 2, TopLeft()], "b",  padding = (-15, 0, -50, 0); style...)
-    Label(fig[2, 1, TopLeft()], "c",  padding = (-40, 0, -25, 0); style...)
+    Label(fig[1, 2, TopLeft()], "c",  padding = (-15, 0, -50, 0); style...)
+    Label(fig[2, 1, TopLeft()], "b",  padding = (-40, 0, -25, 0); style...)
     style = (font = "CMU Serif Bold", fontsize = 20)
     Label(fig[2, 2, TopLeft()], "d",  padding = (-15, 0, -25, 0); style...)
 
     Label(fig[1, 3, TopLeft()], "e",  padding = (-15, 0, -50, 0); style...)
     style = (font = "CMU Serif Bold", fontsize = 20)
-    Label(fig[1, 4, TopLeft()], "f",  padding = (-15, 0, -50, 0); style...)
-    Label(fig[2, 3, TopLeft()], "g",  padding = (-15, 0, -25, 0); style...)
+    Label(fig[1, 4, TopLeft()], "g",  padding = (-15, 0, -50, 0); style...)
+    Label(fig[2, 3, TopLeft()], "f",  padding = (-15, 0, -25, 0); style...)
     style = (font = "CMU Serif Bold", fontsize = 20)
     Label(fig[2, 4, TopLeft()], "h",  padding = (-15, 0, -25, 0); style...)
 
@@ -61,7 +61,9 @@ function plot_finite(path, mod, Lleft, Lright)
 
 end
 
-fig = plot_finite("Output", "TCM_20", 50, 200)
-outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Paper Draft/Figure proposals"
-save(joinpath(outpath, "Fig_TCM_20_finite.pdf"), fig)
+fig = plot_finite("Output", "TCM_20", 100, 200)
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Manuscript/Figure proposals"
+save(joinpath(outpath, "Fig_TCM_20_finite_optionb.pdf"), fig)
 fig
+
+
