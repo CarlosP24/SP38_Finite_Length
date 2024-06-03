@@ -85,7 +85,7 @@ save(joinpath(outpath, "Fig_TCM_20.pdf"), fig)
 fig
 
 ##
-mod = "SCM_30"
+mod = "SCM_70"
 fig = plot_semi_inf("Output", mod; colorrange_full = (1e-3, 2e-1), colorrange_n = (5e-4, 1e-2), colorrange_length = (log10(140), log10(330)), length_f = 1)
-#save(joinpath(outpath, "Fig_SCM_70.pdf"), fig)
+save(joinpath(outpath, "Fig_SCM_70.pdf"), fig)
 fig
