@@ -24,8 +24,8 @@ using JLD2
 end
 
 # Global config 
-Φlength = 400
-ωlength = 401
+Φlength = 100
+ωlength = 101
 Φrng = subdiv(0, 3.5, Φlength)
 ωrng = subdiv(-.26, .26, ωlength) .+ 1e-4im
 Zs = -5:5 
@@ -43,15 +43,15 @@ L = parse(Int64, ARGS[2])
 #calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
 #Φrng = subdiv(-8, 5.5, Φlength*2)
-Φrng = subdiv(-20, 10, Φlength*2)
+Φrng = subdiv(-30, 30, Φlength*2)
 calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
 calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 3)
 
 
-if L == 0
-    calc_Length(mod, L; Φrng, ωrng, nforced = 1)
-    calc_Length(mod, L; Φrng, ωrng, nforced = 3)
-end
+# if L == 0
+#     calc_Length(mod, L; Φrng, ωrng, nforced = 1)
+#     calc_Length(mod, L; Φrng, ωrng, nforced = 3)
+# end
 
 # Clean up 
 rmprocs(workers()...)
