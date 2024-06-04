@@ -39,7 +39,8 @@ end
 
 function plot_LDOS(pos, fdata; colormap = cgrad(:thermal)[10:end], colorrange = (5e-4, 5e-2))
     @unpack xlabel, ylabel, Φrng, ωrng, LDOS, Δ0, Φa, Φb, xticks, yticks, ylabelpadding = fdata
-    ax = Axis(pos; xlabel, ylabel, xticks, yticks, ylabelpadding)
+    ax = Axis(pos; xlabel, ylabel, xticks, yticks, ylabelpadding, xminorticksvisible = true)
+    ax.xminorticks = range(Φa, Φb; step = 1)
     heatmap!(ax, Φrng, ωrng, sum(values(LDOS)); colormap, colorrange, lowclip = :black, rasterize = 5)
     xlims!(ax, (Φa, Φb))
     return ax
@@ -49,8 +50,7 @@ function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], c
     ax = plot_LDOS(pos, fdata; colormap, colorrange)
     @unpack Φa, Φb, Δ0 = fdata
     ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1; step)
-    text!(ax, Φa + 0.75*step, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
-    text!(ax, Φa + 0.75*step, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
+    ax.xminorticks = range(Φa, Φb; step = 1)
     vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dashdot)
     return ax
 end
@@ -75,7 +75,7 @@ function plot_length(pos, fdata, fdata_length; dlim = 1, colorrange = (10^2, 10^
     ξM[ξM .== 0.0] .= NaN
     ξM = vec(ξM)
     notNaN_ξM = .!isnan.(ξM)
-    ξMax = ξM[findfirst(notNaN_ξM)]
+    ξMax = maximum(ξM[findall(notNaN_ξM)])
     ξMin = minimum(ξM[findall(notNaN_ξM)])
     ax = Axis(pos; backgroundcolor = (:white, 0),)
     heatmap!(ax, Φrng, [0], reshape(log10.(ξM), (length(ξM), 1)); colormap = :RdYlGn_9, colorrange, )
@@ -85,3 +85,35 @@ function plot_length(pos, fdata, fdata_length; dlim = 1, colorrange = (10^2, 10^
     hidexdecorations!(ax)
     return ax, ξMax, ξMin
 end
+
+function plot_length_0(pos, fdata, fdata_length; dlim = 1e-2, colorrange = (log10(150), log10(10900)))
+    @unpack Lms = fdata_length 
+    @unpack Φrng, ωrng, LDOS, Φa, Φb = fdata 
+
+    midω = ceil(Int, length(ωrng)/2)
+    Ls0 = Lms[:, midω ]
+    LDOS0 = LDOS[0][:, midω]
+    ξM = Ls0 .* (LDOS0 .> dlim)
+    ax = Axis(pos; backgroundcolor = (:white, 0),)
+    ξM[ξM .== 0.0] .= NaN
+    ξM = vec(ξM)
+    notNaN_ξM = .!isnan.(ξM)
+    ξMax = maximum(ξM[findall(notNaN_ξM)])
+    ξMin = minimum(ξM[findall(notNaN_ξM)])
+    heatmap!(ax, Φrng, [0], reshape(log10.(ξM), (length(ξM), 1)); colormap = :RdYlGn_9, colorrange  )
+    xlims!(ax, (Φa, Φb))
+    hideydecorations!(ax)
+    hidespines!(ax)
+    hidexdecorations!(ax)
+    return ax, ξMax, ξMin
+end
+
+function pan_label(pos, text; halign = 0.75, valign = 0.95, fontsize = 15, trans = 0.5)
+    Textbox(pos; placeholder = text, tellwidth = false, tellheight = false, halign, valign, textcolor_placeholder = (:black, 0.8), boxcolor = (:white, trans), bordercolor = :transparent, cornerradius = 0, fontsize)
+end
+
+
+##
+fig = Figure()
+plot_length_0(fig[1, 1], fdata, fdata_length; dlim = 1e-2)
+fig

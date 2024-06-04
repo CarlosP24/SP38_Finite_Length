@@ -2,7 +2,7 @@ using CairoMakie, JLD2, Parameters, Revise
 
 includet("plot_functions.jl")
 
-function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3))
+function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1), colorrange_0 = (3e-3, 1e-1), colorrange_n = (2e-4, 3e-2))
     fig = Figure(size = (1100, 250 * 2), font = "CMU Serif Roman", fontsize = 20)
 
     col = 1
@@ -14,30 +14,24 @@ function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), c
         pan_label(fig[2, col], "Total")
         col != 1 && hideydecorations!(ax; ticks = false) 
         hidexdecorations!(ax, ticks = false)
-        ax = plot_LDOS_mJ0(fig[3, col], fdata; colorrange = colorrange_full)
+        ax = plot_LDOS_mJ0(fig[3, col], fdata; colorrange = colorrange_0 )
         pan_label(fig[3, col], L"Lowest $|m_J|$", fontsize = 12, halign = 0.82)
         col != 1 && hideydecorations!(ax; ticks = false) 
         col += 1
         nforced = 1
         indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
         fdata = build_data(indir1)
-        @unpack Φa, Δ0 = fdata
         ax = plot_LDOS_uc(fig[2, col], fdata, nforced; colorrange = colorrange_n)
         pan_label(fig[2, col], "Fixed fluxoid", halign = 0.2, trans = 0.7)
         hideydecorations!(ax; ticks = false)
         hidexdecorations!(ax, ticks = false)
-        text!(ax, Φa + 6, Δ0*0.3; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
-        text!(ax, Φa + 6, -Δ0*0.3 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
 
         nforced = 3
         indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
         fdata = build_data(indir1)
-        @unpack Φa, Δ0 = fdata
         ax = plot_LDOS_uc(fig[3, col], fdata, nforced; colorrange = colorrange_n)
         pan_label(fig[3, col], "Fixed fluxoid", halign = 0.2, trans = 0.7)
         hideydecorations!(ax; ticks = false)
-        text!(ax, Φa + 2, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
-        text!(ax, Φa + 2, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
         col += 1
     end
 
@@ -82,10 +76,10 @@ function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), c
 
 end
 
-fig = plot_finite("Output", "TCM_20", 100, 200)
-outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Manuscript/Figure proposals"
-save(joinpath(outpath, "Fig_TCM_20_finite_optionb.pdf"), fig)
-fig
+fig = plot_finite_SCM("Output", "SCM_70", 500, 1000;)
 
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Manuscript/Figure proposals"
+#save(joinpath(outpath, "Fig_SCM_70_finite_optionb.pdf"), fig)
+fig
 
 
