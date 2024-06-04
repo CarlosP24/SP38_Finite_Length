@@ -24,8 +24,8 @@ using JLD2
 end
 
 # Global config 
-Φlength = 100
-ωlength = 101
+Φlength = 400
+ωlength = 401
 Φrng = subdiv(0, 3.5, Φlength)
 ωrng = subdiv(-.26, .26, ωlength) .+ 1e-4im
 Zs = -5:5 
@@ -43,7 +43,7 @@ L = parse(Int64, ARGS[2])
 #calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
 #Φrng = subdiv(-8, 5.5, Φlength*2)
-Φrng = subdiv(-30, 30, Φlength*2)
+Φrng = subdiv(-30, 34, Φlength*2)
 calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
 calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 3)
 
