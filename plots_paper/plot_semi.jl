@@ -4,14 +4,14 @@ includet("plot_functions.jl")
 
 ## 
 function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length = (log10(50), log10(170)), dlim = 2e-2,)
-    fig = Figure(size = (1100, 300), font = "CMU Serif Roman", fontsize = 20)
+    fig = Figure(size = (1100, 300), font = "CMU Serif Roman", fontsize = 16)
 
     # Full LDOS
     indir = "$path/$mod/semi.jld2"
     fdata = build_data(indir)
     
     ax = plot_LDOS(fig[2, 1], fdata; colorrange = colorrange_full)
-    pan_label(fig[2, 1], "Total")
+    pan_label(fig[2, 1], "Total"; width = Relative(0.17), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
 
     # n = 1 
     nforced = 1
@@ -20,7 +20,7 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     @unpack Φa, Δ0 = fdata
 
     ax = plot_LDOS_uc(fig[2, 2], fdata, nforced; colorrange = colorrange_n)
-    pan_label(fig[2, 2], "Fixed fluxoid"; halign = 0.4)
+    pan_label(fig[2, 2], "Fixed fluxoid"; halign = 0.4, width = Relative(0.35), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
     hideydecorations!(ax; ticks = false)
     text!(ax, Φa + 2, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
     text!(ax, Φa + 2, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
@@ -39,7 +39,7 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     @unpack Φa, Δ0 = fdata
 
     ax = plot_LDOS_uc(fig[2, 3], fdata, nforced; colorrange = colorrange_n)
-    pan_label(fig[2, 3], "Fixed fluxoid"; halign = 0.4)
+    pan_label(fig[2, 3], "Fixed fluxoid"; halign = 0.4, width = Relative(0.35), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
     hideydecorations!(ax; ticks = false) 
     text!(ax, Φa + 2, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
     text!(ax, Φa + 2, -Δ0*0.15 ; text = L"m_J = 0", align = (:center, :center), color = :white, fontsize = 15)
@@ -91,6 +91,6 @@ end
 
 mod = "TCM_20"
 fig = plot_semi_inf("Output", mod)
-outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Manuscript/Figure proposals"
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 save(joinpath(outpath, "Fig_TCM_20.pdf"), fig)
 fig

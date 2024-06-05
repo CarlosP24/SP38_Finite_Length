@@ -108,8 +108,8 @@ function plot_length_0(pos, fdata, fdata_length; dlim = 1e-2, colorrange = (log1
     return ax, ξMax, ξMin
 end
 
-function pan_label(pos, text; halign = 0.75, valign = 0.95, fontsize = 15, trans = 0.5)
-    Textbox(pos; placeholder = text, tellwidth = false, tellheight = false, halign, valign, textcolor_placeholder = (:black, 0.8), boxcolor = (:white, trans), bordercolor = :transparent, cornerradius = 0, fontsize)
+function pan_label(pos, text; halign = 0.75, valign = 0.95, fontsize = 15, trans = 0.5, width = Auto(), height = Auto(), textpadding = (8,8,8,8))
+    Textbox(pos; placeholder = text, tellwidth = false, tellheight = false, halign, valign, textcolor_placeholder = (:black, 0.8), boxcolor = (:white, trans), bordercolor = :transparent, cornerradius = 0, fontsize, width, height, textpadding)
 end
 
 

@@ -31,6 +31,13 @@ function calc_ldos(ρ, Φs, ωs, Zs)
     return Dict([Z => sum.(LDOSarray[:, :, i]) for (i, Z) in enumerate(Zs)])
 end
 
+function calc_ldos_r(ρ, Φs; ω = 0.0 + 1e-4im, Z = 0)
+    LDOS = @showprogress pmap(Φs) do Φ
+        return ρ(ω; ω = ω, Φ = Φ, Z = Z)
+    end
+    return LDOS
+end
+
 function calc_ldos0(ρ, μrng, αrng, Φrng, Zs; ω = 0.0 + 1e-4im)
     pts = Iterators.product(μrng, αrng, Φrng, Zs)
     LDOS = @showprogress pmap(pts) do pt
