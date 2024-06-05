@@ -24,8 +24,8 @@ using JLD2
 end
 
 # Global config 
-Φlength = 400
-ωlength = 401
+Φlength = 800
+ωlength = 801
 Φrng = subdiv(0, 3.5, Φlength)
 ωrng = subdiv(-.26, .26, ωlength) .+ 1e-4im
 Zs = -5:5 
