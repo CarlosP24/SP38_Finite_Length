@@ -27,7 +27,8 @@ function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
 
     # Length
     fdata_length = build_data_length("$path/$mod/semi_length_uc_1.jld2")
-    ax, ξMax, ξMin = plot_length_0(fig[1, 2], fdata, fdata_length; dlim,)
+    ax, ξMax, ξMin = plot_length_0(fig[1, 2], fdata, fdata_length; dlim, colorrange = colorrange_length)
+    println("ξMax = $ξMax, ξMin = $ξMin")
 
     ξdown = round(Int, round(ξMin, digits = -1)*5)
     ξup = round(Int, round(ξMax, digits = -1)*5)
@@ -60,8 +61,7 @@ function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
 
     # Length
     fdata_length = build_data_length("$path/$mod/semi_length_uc_3.jld2")
-    ax, ξMax, ξMin = plot_length_0(fig[1, 3], fdata, fdata_length; dlim,)
-  
+    ax, ξMax, ξMin = plot_length_0(fig[1, 3], fdata, fdata_length; dlim, colorrange = colorrange_length)
 
     cbar = (; colormap = :thermal, label = L"$$ LDOS (arb. units)", limits = (0, 1),  ticklabelsvisible = true, ticks = [0,1], labelpadding = -10,  width = 15, ticksize = 2, ticklabelpad = 5, labelsize = 16,)
 
@@ -89,9 +89,18 @@ function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     return fig
 end
 
+##
 
 mod = "SCM_70"
 fig = plot_semi_SCM("Output", mod; colorrange_full = (3e-3, 2e-1), colorrange_n = (2e-4, 3e-2), colorrange_length = (log10(50), log10(170)), dlim = 2e-2)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_SCM_70.pdf"), fig)
+save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig
+
+##
+mod = "SCM_30"
+fig = plot_semi_SCM("Local/Output", mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (2e-4, 7e-3), colorrange_length = (log10(25), log10(100)), dlim = 3e-6)
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
+save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+fig
+

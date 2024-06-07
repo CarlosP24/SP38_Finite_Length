@@ -88,9 +88,16 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     return fig
 end
 
-
+##
 mod = "TCM_20"
 fig = plot_semi_inf("Output", mod)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 save(joinpath(outpath, "Fig_TCM_20.pdf"), fig)
+fig
+
+##
+mod = "TCM_10"
+fig = plot_semi_inf("Local/Output", mod; colorrange_length = (log10(140), log10(500)))
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
+save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig

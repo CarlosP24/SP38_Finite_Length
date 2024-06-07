@@ -82,9 +82,18 @@ function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), c
 
 end
 
-fig = plot_finite("Output", "TCM_20", 100, 200)
+##
+mod = "TCM_20"
+fig = plot_finite("Output", mod, 100, 200)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_TCM_20_finite.pdf"), fig)
+save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
+fig
+
+##
+mod = "TCM_10"
+fig = plot_finite("Local/Output", mod, 100, 200)
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
+save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 
 

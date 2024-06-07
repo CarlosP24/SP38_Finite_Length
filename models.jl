@@ -73,7 +73,7 @@ models = Dict(
         g = 10,
         τΓ = 40,
         μ = 2,
-        preα = 46.66,
+        preα = 46.66,   
         ishollow = false,
     ),
     "SCM_30" => (;

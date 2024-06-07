@@ -1,4 +1,4 @@
-function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, nforced = nothing, Z = 0)
+function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.26, .26, 201) .+ 1e-4im, nforced = nothing, Z = 0, path = "Output")
     if L == 0
         gs = "semi"
         subdir = "semi"
@@ -8,7 +8,7 @@ function calc_Length(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-
     end
 
     # Setup Output
-    outdir = "Output/$(mod)/$(subdir)_length.jld2"
+    outdir = "$(path)/$(mod)/$(subdir)_length.jld2"
     mkpath(dirname(outdir)) 
     
     # Load models
