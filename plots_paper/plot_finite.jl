@@ -91,9 +91,9 @@ fig
 
 ##
 mod = "TCM_10"
-fig = plot_finite("Local/Output", mod, 100, 200)
+fig = plot_finite("Output", mod, 100, 200)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 
 

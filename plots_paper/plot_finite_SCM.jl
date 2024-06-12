@@ -85,8 +85,16 @@ function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1
 end
 
 ##
-fig = plot_finite_SCM("Output", "SCM_70", 200, 400;)
+mod = "SCM_70"
+fig = plot_finite_SCM("Output", mod, 100, 400;)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_SCM_70_finite.pdf"), fig)
+save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
+fig
+
+##
+mod = "SCM_30"
+fig = plot_finite_SCM("Output", mod, 100, 400;)
+outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
+#save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 

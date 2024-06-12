@@ -94,13 +94,13 @@ end
 mod = "SCM_70"
 fig = plot_semi_SCM("Output", mod; colorrange_full = (3e-3, 2e-1), colorrange_n = (2e-4, 3e-2), colorrange_length = (log10(50), log10(170)), dlim = 2e-2)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig
 
 ##
 mod = "SCM_30"
-fig = plot_semi_SCM("Local/Output", mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (2e-4, 7e-3), colorrange_length = (log10(25), log10(100)), dlim = 3e-6)
+fig = plot_semi_SCM("Output", mod; colorrange_full = (0, 2e-2), colorrange_n = (2e-4, 7e-3), colorrange_length = (log10(25), log10(100)), dlim = 3e-6)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig
 
