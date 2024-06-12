@@ -99,5 +99,5 @@ fig
 mod = "TCM_10"
 fig = plot_semi_inf("Local/Output", mod; colorrange_length = (log10(140), log10(500)))
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig
