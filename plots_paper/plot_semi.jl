@@ -3,7 +3,7 @@ using CairoMakie, JLD2, Parameters, Revise
 includet("plot_functions.jl")
 
 ## 
-function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length = (log10(50), log10(170)), dlim = 2e-2,)
+function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length_1 = (log10(50), log10(170)), colorrange_length_3 = (log10(50), log10(170)), dlim = 2e-2,)
     fig = Figure(size = (1100, 300), font = "CMU Serif Roman", fontsize = 16)
 
     # Full LDOS
@@ -27,7 +27,8 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
 
     # Length
     fdata_length = build_data_length("$path/$mod/semi_length_uc_1.jld2")
-    ax, ξMax, ξMin = plot_length(fig[1, 2], fdata, fdata_length; dlim,colorrange = colorrange_length)
+    ax, ξMax, ξMin = plot_length(fig[1, 2], fdata, fdata_length; dlim,colorrange = colorrange_length_1)
+    println("ξMax = $ξMax, ξMin = $ξMin")
 
     ξdown = round(Int, round(ξMin, digits = -1)*5)
 
@@ -47,7 +48,8 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     # Length
     fdata_length = build_data_length("$path/$mod/semi_length_uc_3.jld2")
 
-    ax, ξMax, ξMin = plot_length(fig[1, 3], fdata, fdata_length; dlim,colorrange = colorrange_length)
+    ax, ξMax, ξMin = plot_length(fig[1, 3], fdata, fdata_length; dlim,colorrange = colorrange_length_3)
+    println("ξMax = $ξMax, ξMin = $ξMin")
 
     ξup = round(Int, round(ξMax, digits = -1)*5)
     eξup = ceil(Int, log10(ξup))
@@ -97,7 +99,7 @@ fig
 
 ##
 mod = "TCM_10"
-fig = plot_semi_inf("Output", mod; colorrange_length = (log10(140), log10(500)))
+fig = plot_semi_inf("Output", mod;  colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), colorrange_length_1 = (log10(30), log10(400)), colorrange_length_3 = (log10(270), log10(500)),dlim = 7e-3)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-#save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig

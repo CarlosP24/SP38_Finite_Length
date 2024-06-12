@@ -30,6 +30,22 @@ function build_data(indir)
     return formated_data(; data, Φrng, ωrng, LDOS, Δ0, Φa, Φb, xticks, yticks)
 end
 
+function build_data_Φcut(indir, Φ1, Φ2)
+    data = load(indir)
+    Φrng = data["Φrng"]
+    ind1 = findmin(abs.(Φrng .- Φ1))[2]
+    ind2 = findmin(abs.(Φrng .- Φ2))[2]
+    Φrng = Φrng[ind1:ind2]
+    ωrng = real.(data["ωrng"])
+    LDOS = data["LDOS"]
+    LDOS = Dict(Z => LDOS[Z][ind1:ind2, :] for Z in keys(LDOS))
+    Δ0 = data["model"].Δ0
+    Φa, Φb = first(Φrng), last(Φrng)
+    xticks = range(round(Int, Φa), round(Int, Φb))
+    yticks = ([-Δ0, 0, Δ0], [L"-\Delta_0", "0", L"\Delta_0"]) 
+    return formated_data(; data, Φrng, ωrng, LDOS, Δ0, Φa, Φb, xticks, yticks)
+end
+
 function build_data_length(indir)
     data = load(indir)
     Φrng = data["Φrng"]

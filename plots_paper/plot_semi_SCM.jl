@@ -3,7 +3,7 @@ using CairoMakie, JLD2, Parameters, Revise
 includet("plot_functions.jl")
 
 ##
-function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length = (log10(50), log10(170)), dlim = 2e-2,)
+function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length = (log10(50), log10(170)), dlim = 2e-2, Φticks1 = range(-29, 31; step = 10), Φticks3 = range(-27, 33; step = 10))
     fig = Figure(size = (1100, 300), font = "CMU Serif Roman", fontsize = 16)
 
     # Full LDOS
@@ -20,6 +20,7 @@ function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     @unpack Φa, Δ0 = fdata
 
     ax = plot_LDOS_uc(fig[2, 2], fdata, nforced; colorrange = colorrange_n, step = 10)
+    ax.xticks = Φticks1
     hideydecorations!(ax; ticks = false)
     pan_label(fig[2, 2], "Fixed fluxoid"; halign = 0.9, width = Relative(0.35), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
     text!(ax, Φa + 6, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
@@ -28,7 +29,6 @@ function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     # Length
     fdata_length = build_data_length("$path/$mod/semi_length_uc_1.jld2")
     ax, ξMax, ξMin = plot_length_0(fig[1, 2], fdata, fdata_length; dlim, colorrange = colorrange_length)
-    println("ξMax = $ξMax, ξMin = $ξMin")
 
     ξdown = round(Int, round(ξMin, digits = -1)*5)
     ξup = round(Int, round(ξMax, digits = -1)*5)
@@ -53,7 +53,7 @@ function plot_semi_SCM(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     @unpack Φa, Δ0 = fdata
 
     ax = plot_LDOS_uc(fig[2, 3], fdata, nforced; colorrange = colorrange_n)
-    ax.xticks = range(-27, 33; step = 10)
+    ax.xticks = Φticks3
     pan_label(fig[2, 3], "Fixed fluxoid"; halign = 0.9, width = Relative(0.35), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
     hideydecorations!(ax; ticks = false, minorticks = false) 
     text!(ax, Φa + 6, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
@@ -99,8 +99,8 @@ fig
 
 ##
 mod = "SCM_30"
-fig = plot_semi_SCM("Output", mod; colorrange_full = (0, 2e-2), colorrange_n = (2e-4, 7e-3), colorrange_length = (log10(25), log10(100)), dlim = 3e-6)
+fig = plot_semi_SCM("Output", mod; colorrange_full = (0, 2e-2), colorrange_n = (2e-4, 7e-3), colorrange_length = (log10(25), log10(100)), dlim = 5e-5, Φticks1 = range(-7, 9; step = 2), Φticks3 = range(-7, 9; step = 2))
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-#save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig
 
