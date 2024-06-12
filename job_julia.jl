@@ -40,7 +40,7 @@ include("calcs/calc_length.jl")
 mod = ARGS[1]
 L = parse(Int64, ARGS[2])
 
-#calc_LDOS(mod, L; Φrng, ωrng, Zs)
+calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
 Φlims = ranges[mod]
 
