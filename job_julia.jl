@@ -40,7 +40,7 @@ include("calcs/calc_length.jl")
 mod = ARGS[1]
 L = parse(Int64, ARGS[2])
 
-calc_LDOS(mod, L; Φrng, ωrng, Zs)
+#calc_LDOS(mod, L; Φrng, ωrng, Zs)
 
 #Φrng = subdiv(-8, 5.5, Φlength*2)
 #Φrng = subdiv(-30, 34, Φlength*2)
@@ -49,10 +49,10 @@ calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 1)
 calc_LDOS(mod, L; Φrng, ωrng, Zs = 0, nforced = 3)
 
 
-if L == 0
-    calc_Length(mod, L; Φrng, ωrng, nforced = 1)
-    calc_Length(mod, L; Φrng, ωrng, nforced = 3)
-end
+# if L == 0
+#     calc_Length(mod, L; Φrng, ωrng, nforced = 1)
+#     calc_Length(mod, L; Φrng, ωrng, nforced = 3)
+# end
 
 # Clean up 
 rmprocs(workers()...)
