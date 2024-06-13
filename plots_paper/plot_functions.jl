@@ -102,6 +102,26 @@ function plot_length(pos, fdata, fdata_length; dlim = 1, colorrange = (10^2, 10^
     return ax, ξMax, ξMin
 end
 
+function rep_length(mod, Φa, Φb, n; path = "Output", dlim = 2e-2)
+    fdata = build_data("$path/$mod/semi_uc_$(n).jld2")
+    fdata_length = build_data_length("$path/$mod/semi_length_uc_$(n).jld2")
+    @unpack Lms = fdata_length 
+    @unpack Φrng, ωrng, LDOS = fdata 
+
+    midω = ceil(Int, length(ωrng)/2)
+    Ls0 = Lms[:, midω ]
+    LDOS0 = LDOS[0][:, midω]
+    ξM = Ls0 .* (LDOS0 .> dlim)
+    ξM[ξM .== 0.0] .= NaN
+    ξM = vec(ξM)
+
+    ind1 = findmin(abs.(Φrng .- Φa))[2]
+    ind2 = findmin(abs.(Φrng .- Φb))[2]
+    ξM = ξM[ind1:ind2]
+    
+    return minimum(ξM[findall(.!isnan.(ξM))])*5
+end
+
 function plot_length_0(pos, fdata, fdata_length; dlim = 1e-2, colorrange = (log10(150), log10(10900)))
     @unpack Lms = fdata_length 
     @unpack Φrng, ωrng, LDOS, Φa, Φb = fdata 

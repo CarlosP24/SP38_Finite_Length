@@ -101,6 +101,6 @@ fig
 mod = "SCM_30"
 fig = plot_semi_SCM("Output", mod; colorrange_full = (0, 2e-2), colorrange_n = (2e-4, 7e-3), colorrange_length = (log10(25), log10(100)), dlim = 5e-5, Φticks1 = range(-7, 9; step = 2), Φticks3 = range(-7, 9; step = 2))
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig
 
