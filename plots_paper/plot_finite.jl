@@ -1,6 +1,6 @@
 using CairoMakie, JLD2, Parameters, Revise
 
-includet("plot_functions.jl")
+includet("plot_functions.jl")   
 
 function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3))
     fig = Figure(size = (1100, 250 * 2), font = "CMU Serif Roman", fontsize = 16)

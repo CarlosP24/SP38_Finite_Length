@@ -29,16 +29,15 @@ function calc_LDOS(mod, L; Φrng = subdiv(0.501, 1.499, 200), ωrng = subdiv(-.2
 
     # Run n save LDOS
     LDOS = calc_ldos(ldos(g[cells = (-1,)]), Φrng, ωrng, Zs)
-    ΦLP_lims1 = LP_lobe(1, model.ξd, model.R, model.d)
-    ΦLP_lims3 = LP_lobe(3, model.ξd, model.R, model.d)
+    #ΦLP_lims1 = LP_lobe(1, model.ξd, model.R, model.d)
+    #ΦLP_lims3 = LP_lobe(3, model.ξd, model.R, model.d)
 
     save(outdir, 
         Dict(
             "model" => model,   
             "Φrng" => Φrng,
             "ωrng" => ωrng,
-            "LDOS" => LDOS,
-            "Φlims" => Dict(1 => ΦLP_lims1, 3 => ΦLP_lims3)        
+            "LDOS" => LDOS,  
             )
     )
 end
