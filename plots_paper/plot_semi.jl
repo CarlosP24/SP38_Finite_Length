@@ -97,7 +97,7 @@ fig
 
 ##
 mod = "TCM_10"
-fig = plot_semi_inf("Output", mod;  colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), colorrange_length_1 = (log10(30), log10(400)), colorrange_length_3 = (log10(270), log10(500)),dlim = 7e-3, Φlims1 = [0.63, 1.37], Φlims3 = [3])
+fig = plot_semi_inf("Output", mod;  colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), colorrange_length_1 = (log10(30), log10(400)), colorrange_length_3 = (log10(270), log10(500)),dlim = 7e-3, Φlims1 = [0.63, 1.37], Φlims3 = 0)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 #save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig

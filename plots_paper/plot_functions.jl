@@ -71,7 +71,7 @@ function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], c
     ax.xminorticks = range(Φa, Φb; step = 1)
     if Φlims === nothing
         vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dashdot)
-    else
+    elseif Φlims != 0
         vlines!(ax, Φlims; color = :white, linestyle = :dashdot)
     end
     return ax

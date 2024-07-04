@@ -100,7 +100,7 @@ fig
 
 ##
 mod = "SCM_30"
-fig = plot_finite_SCM("Output", mod, 100, 200;colorrange_full = (3e-3, 2e-2), colorrange_0 = (3e-4, 3e-2), colorrange_n = (3e-4, 5e-3), Φlims1 = [0.63, 1.37], Φlims3 = [3])
+fig = plot_finite_SCM("Output", mod, 100, 200;colorrange_full = (3e-3, 2e-2), colorrange_0 = (3e-4, 3e-2), colorrange_n = (3e-4, 5e-3), Φlims1 = [0.63, 1.37], Φlims3 = 0)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 #save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig

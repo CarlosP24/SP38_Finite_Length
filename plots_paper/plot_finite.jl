@@ -91,7 +91,7 @@ fig
 
 ##
 mod = "TCM_10"
-fig = plot_finite("Output", mod, 100, 200; colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), Φlims1 = [0.63, 1.37], Φlims3 = [3] )
+fig = plot_finite("Output", mod, 100, 200; colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), Φlims1 = [0.63, 1.37], Φlims3 = 0 )
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 #save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
