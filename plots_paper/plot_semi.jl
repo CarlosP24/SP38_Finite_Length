@@ -3,7 +3,7 @@ using CairoMakie, JLD2, Parameters, Revise
 includet("plot_functions.jl")
 
 ## 
-function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length_1 = (log10(50), log10(170)), colorrange_length_3 = (log10(50), log10(170)), dlim = 2e-2,)
+function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), colorrange_length_1 = (log10(50), log10(170)), colorrange_length_3 = (log10(50), log10(170)), dlim = 2e-2, Φlims1 = nothing, Φlims3 = nothing)
     fig = Figure(size = (1100, 300), font = "CMU Serif Roman", fontsize = 16)
 
     # Full LDOS
@@ -19,7 +19,7 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     fdata = build_data(indir1)
     @unpack Φa, Δ0 = fdata
 
-    ax = plot_LDOS_uc(fig[2, 2], fdata, nforced; colorrange = colorrange_n)
+    ax = plot_LDOS_uc(fig[2, 2], fdata, nforced; colorrange = colorrange_n, Φlims = Φlims1)
     pan_label(fig[2, 2], "Fixed fluxoid"; halign = 0.4, width = Relative(0.35), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
     hideydecorations!(ax; ticks = false)
     text!(ax, Φa + 2, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
@@ -38,7 +38,7 @@ function plot_semi_inf(path, mod; colorrange_full = (3e-4, 2e-2), colorrange_n =
     fdata = build_data(indir1)
     @unpack Φa, Δ0 = fdata
 
-    ax = plot_LDOS_uc(fig[2, 3], fdata, nforced; colorrange = colorrange_n)
+    ax = plot_LDOS_uc(fig[2, 3], fdata, nforced; colorrange = colorrange_n, Φlims = Φlims3 )
     pan_label(fig[2, 3], "Fixed fluxoid"; halign = 0.4, width = Relative(0.35), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
     hideydecorations!(ax; ticks = false) 
     text!(ax, Φa + 2, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
@@ -97,7 +97,7 @@ fig
 
 ##
 mod = "TCM_10"
-fig = plot_semi_inf("Output", mod;  colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), colorrange_length_1 = (log10(30), log10(400)), colorrange_length_3 = (log10(270), log10(500)),dlim = 7e-3)
+fig = plot_semi_inf("Output", mod;  colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), colorrange_length_1 = (log10(30), log10(400)), colorrange_length_3 = (log10(270), log10(500)),dlim = 7e-3, Φlims1 = [0.63, 1.37], Φlims3 = [3])
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 #save(joinpath(outpath, "Fig_$(mod).pdf"), fig)
 fig

@@ -2,8 +2,8 @@ using CairoMakie, JLD2, Parameters, Revise
 
 includet("plot_functions.jl")   
 
-function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3))
-    fig = Figure(size = (1100, 250 * 2), font = "CMU Serif Roman", fontsize = 16)
+function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), colorrange_n = (1e-4, 3e-3), Φlims1 = nothing, Φlims3 = nothing)
+    fig = Figure(size = (1100, 250 * 2), font = "CMU Serif Roman", fontsize = 16,)
 
     col = 1
     for L in [Lleft, Lright]
@@ -22,7 +22,7 @@ function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), c
         indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
         fdata = build_data(indir1)
         @unpack Φa, Δ0 = fdata
-        ax = plot_LDOS_uc(fig[2, col], fdata, nforced; colorrange = colorrange_n)
+        ax = plot_LDOS_uc(fig[2, col], fdata, nforced; colorrange = colorrange_n, Φlims = Φlims1)
         pan_label(fig[2, col], "Fixed fluxoid", halign = 0.2, trans = 0.7, width = Relative(0.43), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
         hideydecorations!(ax; ticks = false)
         hidexdecorations!(ax, ticks = false, minorticks = false)
@@ -33,7 +33,7 @@ function plot_finite(path, mod, Lleft, Lright; colorrange_full = (3e-4, 2e-2), c
         indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
         fdata = build_data(indir1)
         @unpack Φa, Δ0 = fdata
-        ax = plot_LDOS_uc(fig[3, col], fdata, nforced; colorrange = colorrange_n)
+        ax = plot_LDOS_uc(fig[3, col], fdata, nforced; colorrange = colorrange_n, Φlims = Φlims3)
         pan_label(fig[3, col], "Fixed fluxoid", halign = 0.2, trans = 0.7, width = Relative(0.43), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
         hideydecorations!(ax; ticks = false)
         text!(ax, Φa + 2, Δ0*0.15 ; text = L"n = %$(nforced)", align = (:center, :center), color = :white, fontsize = 15)
@@ -86,14 +86,14 @@ end
 mod = "TCM_20"
 fig = plot_finite("Output", mod, 100, 200)
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 
 ##
 mod = "TCM_10"
-fig = plot_finite("Output", mod, 100, 200; colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), )
+fig = plot_finite("Output", mod, 100, 200; colorrange_full = (3e-4, 7e-3), colorrange_n = (1e-4, 2e-3), Φlims1 = [0.63, 1.37], Φlims3 = [3] )
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 
 

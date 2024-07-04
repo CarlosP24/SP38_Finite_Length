@@ -11,6 +11,7 @@
     xticks = nothing
     yticks = nothing
     ylabelpadding = -10
+    model = nothing
 end
 
 @with_kw struct formated_data_length
@@ -27,7 +28,8 @@ function build_data(indir)
     Φa, Φb = first(Φrng), last(Φrng)
     xticks = range(round(Int, Φa), round(Int, Φb))
     yticks = ([-Δ0, 0, Δ0], [L"-\Delta_0", "0", L"\Delta_0"]) 
-    return formated_data(; data, Φrng, ωrng, LDOS, Δ0, Φa, Φb, xticks, yticks)
+    model = data["model"]
+    return formated_data(; data, Φrng, ωrng, LDOS, Δ0, Φa, Φb, xticks, yticks, model)
 end
 
 function build_data_Φcut(indir, Φ1, Φ2)
@@ -62,12 +64,16 @@ function plot_LDOS(pos, fdata; colormap = cgrad(:thermal)[10:end], colorrange = 
     return ax
 end
 
-function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], colorrange = (5e-4, 5e-2), step = 2)
+function plot_LDOS_uc(pos, fdata, nforced; colormap = cgrad(:thermal)[10:end], colorrange = (5e-4, 5e-2), step = 2, Φlims = nothing)
     ax = plot_LDOS(pos, fdata; colormap, colorrange)
     @unpack Φa, Φb, Δ0 = fdata
     ax.xticks = range(round(Int, Φa)+1, round(Int, Φb)+1; step)
     ax.xminorticks = range(Φa, Φb; step = 1)
-    vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dashdot)
+    if Φlims === nothing
+        vlines!(ax, [nforced - 0.5, nforced + 0.5]; color = :white, linestyle = :dashdot)
+    else
+        vlines!(ax, Φlims; color = :white, linestyle = :dashdot)
+    end
     return ax
 end
 

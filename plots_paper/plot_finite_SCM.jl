@@ -2,7 +2,7 @@ using CairoMakie, JLD2, Parameters, Revise
 
 includet("plot_functions.jl")
 
-function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1), colorrange_0 = (3e-3, 2e-1), colorrange_n = (3e-4, 2e-2))
+function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1), colorrange_0 = (3e-3, 2e-1), colorrange_n = (3e-4, 2e-2), Φlims1 = nothing, Φlims3 = nothing)
     fig = Figure(size = (1100, 250 * 2), font = "CMU Serif Roman", fontsize = 16)
 
     col = 1
@@ -22,7 +22,7 @@ function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1
         indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
         fdata = build_data(indir1)
         @unpack Φa, Δ0 = fdata
-        ax = plot_LDOS_uc(fig[2, col], fdata, nforced; colorrange = colorrange_n)
+        ax = plot_LDOS_uc(fig[2, col], fdata, nforced; colorrange = colorrange_n, Φlims = Φlims1)
         ax.xticks = range(-29, 31; step = 10)
         pan_label(fig[2, col], "Fixed fluxoid", halign = 0.2, trans = 0.7, width = Relative(0.43), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
         hideydecorations!(ax; ticks = false)
@@ -41,7 +41,7 @@ function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1
         indir1 = replace(indir, ".jld2" => "_uc_$(nforced).jld2")
         fdata = build_data(indir1)
         @unpack Φa, Δ0 = fdata
-        ax = plot_LDOS_uc(fig[3, col], fdata, nforced; colorrange = colorrange_n)
+        ax = plot_LDOS_uc(fig[3, col], fdata, nforced; colorrange = colorrange_n, Φlims = Φlims3)
         ax.xticks = range(-9, 11; step = 2)
         pan_label(fig[3, col], "Fixed fluxoid", halign = 0.2, trans = 0.7, width = Relative(0.43), height = Relative(0.1), fontsize = 15, textpadding = (6, 0, 10, 0))
         hideydecorations!(ax; ticks = false)
@@ -91,17 +91,17 @@ function plot_finite_SCM(path, mod, Lleft, Lright; colorrange_full = (3e-3, 2e-1
 
 end
 
-
+##
 mod = "SCM_70"
-fig = plot_finite_SCM("Output", mod, 100, 400;)
+fig = plot_finite_SCM("Output", mod, 100, 400;)             
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
 save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 
 ##
 mod = "SCM_30"
-fig = plot_finite_SCM("Output", mod, 100, 400;colorrange_full = (3e-3, 2e-2), colorrange_0 = (3e-4, 3e-2), colorrange_n = (3e-4, 5e-3))
+fig = plot_finite_SCM("Output", mod, 100, 200;colorrange_full = (3e-3, 2e-2), colorrange_0 = (3e-4, 3e-2), colorrange_n = (3e-4, 5e-3), Φlims1 = [0.63, 1.37], Φlims3 = [3])
 outpath = "/Users/carlospaya/Dropbox/141. Full-shell Majorana oscillations/Material/Figure proposals"
-save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
+#save(joinpath(outpath, "Fig_$(mod)_finite.pdf"), fig)
 fig
 
