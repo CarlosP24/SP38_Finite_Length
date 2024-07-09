@@ -4,5 +4,9 @@ Output/
 Figures/
 Local/
 Tests/
+plots/
 tests_local.jl
 models_largeR.jl
+models_long
+models_short
+bash_loop.sh
