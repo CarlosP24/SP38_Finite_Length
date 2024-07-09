@@ -1,0 +1,2 @@
+# Simulation and plotting code for Absence of Majorana oscillations in finite-length full-shell hybrid nanowires
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12689024.svg)](https://doi.org/10.5281/zenodo.12689024)
